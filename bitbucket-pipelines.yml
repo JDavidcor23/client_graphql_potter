@@ -1,6 +1,6 @@
 # This is a sample Bitbucket Pipelines configuration for a ReactJS project.
 
-image: node:16.3.0-alpine3.11
+image: public.ecr.aws/sam/build-nodejs14.x
 
 pipelines:
   default:
@@ -24,10 +24,8 @@ pipelines:
           - node
         script:
           - npm run build
-
     - step:
-        name: Deploy to Production
-        deployment: production
-        trigger: manual
+        name: Build and Package
         script:
-          - npm run deploy
+          - sam build
+          - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
