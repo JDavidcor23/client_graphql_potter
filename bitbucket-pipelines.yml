@@ -1,10 +1,6 @@
 # This is a sample Bitbucket Pipelines configuration for a ReactJS project.
 
 image: node:16.3.0-alpine3.11
-environment:
-  AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-  AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
 
 pipelines:
   default:
@@ -28,16 +24,15 @@ pipelines:
           - node
         script:
           - npm run build
-
     - step:
         name: Desplegar en AWS
         deployment: production
         script:
           - pipe: atlassian/aws-s3-deploy:1.2.1
             variables:
-              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              AWS_ACCESS_KEY_ID: AKIAW4IZEZVYU65SUZ46
+              AWS_SECRET_ACCESS_KEY: 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
+              AWS_DEFAULT_REGION: us-east-1
               S3_BUCKET: "harry-potter-graphql-jdavidcor"
               LOCAL_PATH: "dist/*"
               ACL: "public-read"
