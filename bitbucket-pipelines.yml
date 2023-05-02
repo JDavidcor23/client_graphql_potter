@@ -1,20 +1,33 @@
-image: node:14.16.0
+# This is a sample Bitbucket Pipelines configuration for a ReactJS project.
+
+image: node:16.3.0-alpine3.11
 
 pipelines:
   default:
     - step:
-        name: Install and Build
+        name: Install Dependencies
         caches:
           - node
         script:
           - npm install
-          - npm run build
+
     - step:
-        name: Deploy to AWS
+        name: Run Tests
+        caches:
+          - node
+        script:
+          - npm test
+
+    - step:
+        name: Build Production Code
+        caches:
+          - node
+        script:
+          - npm run build
+
+    - step:
+        name: Deploy to Production
         deployment: production
         trigger: manual
         script:
-          - apt-get update && apt-get install -y zip
-          - zip -r app.zip build/
-          - apt-get install -y awscli
-          - aws s3 cp app.zip s3://harry-potter-graphql-jdavidcor/app.zip
+          - npm run deploy
