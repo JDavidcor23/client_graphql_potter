@@ -8,7 +8,7 @@
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "jest --watchAll=false --coverage --CI=true",
-    "deploy": "vite build && aws s3 sync dist/ s3://harry-potter-graphql-jdavidcor"
+    "deploy": "aws s3 sync dist/ s3://harry-potter-graphql-jdavidcor"
   },
   "dependencies": {
     "@apollo/client": "^3.7.13",
