@@ -3,31 +3,34 @@
 image: node:16.3.0-alpine3.11
 
 pipelines:
-  default:
+  branches:
+    master:
     - step:
-        name: Install Dependencies
-        caches:
-          - node
+        name: Build and Test
+        image: node:latest
         script:
           - npm install
-
-    - step:
-        name: Run Tests
-        caches:
-          - node
-        script:
           - npm test
-
-    - step:
-        name: Build Production Code
-        caches:
-          - node
-        script:
           - npm run build
-
-    - step:
-        name: Deploy to Production
-        deployment: production
-        trigger: manual
-        script:
-          - npm run deploy
+    custom:
+      production:
+        - step:
+            name: Deploy to production
+            image: node:latest
+            script:
+              - npm install
+              - npm run build
+            artifacts:
+              - build/**
+        - step:
+            name: Deploy to production
+            deployment: production
+            script:
+              - pipe: atlassian/aws-s3-deploy:0.2.4
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                S3_BUCKET: "$S3_BUCKET"
+                LOCAL_PATH: "dist/*"
+                ACL: "public-read"
