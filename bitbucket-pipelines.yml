@@ -1,7 +1,6 @@
 # This is a sample Bitbucket Pipelines configuration for a ReactJS project.
 
 image: node:16.3.0-alpine3.11
-
 environment:
   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
   AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
@@ -28,10 +27,7 @@ pipelines:
         caches:
           - node
         script:
-          - npm install
           - npm run build
-        artifacts:
-          - build/**
 
     - step:
         name: Desplegar en AWS
