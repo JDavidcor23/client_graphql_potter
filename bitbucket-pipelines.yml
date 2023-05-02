@@ -7,15 +7,15 @@ pipelines:
           script:
             - npm install
             - npm run test
-            - npm run dist
+            - npm run build
   custom: # Pipeline that only runs manually
     production:
       - step:
-          name: disting the app
+          name: building the app
           image: node:latest
           script:
             - npm install
-            - npm run dist
+            - npm run build
           artifacts:
             - dist/**
       - step:
