@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { addCharacter, getCharacters } from "../query/index.js";
+import { getCharacters } from "../query/index.js";
+import { addCharacter } from "../mutation/index.js";
 import { useMutation } from "@apollo/client";
 
 export const useAddCharacter = () => {
@@ -12,20 +13,24 @@ export const useAddCharacter = () => {
     img: "",
     isAlive: true,
   });
+  const { name, img, isAlive } = form;
   const onChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(form);
     addCharacterQuery({
       variables: {
         ...form,
         isAlive: JSON.parse(form.isAlive),
       },
     });
-    e.target.reset();
+    setForm({
+      name: "",
+      img: "",
+      isAlive: true,
+    });
   };
-  return { onSubmit, onChange, loading };
+  return { onSubmit, onChange, loading, name, img, isAlive };
 };

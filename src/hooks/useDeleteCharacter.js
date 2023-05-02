@@ -1,6 +1,6 @@
 import { useMutation } from "@apollo/client";
 import React from "react";
-import { deleteCharacter } from "../query/deletCharacter.js";
+import { deleteCharacter } from "../mutation/index.js";
 import { getCharacters } from "../query/index.js";
 
 export const useDeleteCharacter = () => {

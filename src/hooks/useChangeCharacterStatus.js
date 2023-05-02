@@ -1,5 +1,5 @@
 import React from "react";
-import { changeCharacterStatus } from "../query/changeCharacterStatus.js";
+import { changeCharacterStatus } from "../mutation/index.js";
 import { useMutation } from "@apollo/client";
 import { getCharacters } from "../query/index.js";
 
