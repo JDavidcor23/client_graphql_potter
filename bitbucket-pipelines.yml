@@ -25,7 +25,6 @@ pipelines:
         script:
           - npm run build
     - step:
-        name: Build and Package
+        name: deploy
         script:
-          - sam build
           - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
