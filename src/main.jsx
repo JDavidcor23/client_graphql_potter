@@ -13,7 +13,7 @@ const client = new ApolloClient({
   // inMemoryCache es para guardar los datos en el cliente y que no tenga que hacer peticiones al servidor otra vez
   cache: new InMemoryCache(),
   link: new HttpLink({
-    uri: "http://localhost:4000/",
+    uri: "https://harry-graphql-potter.onrender.com/graphql",
   }),
 });
 

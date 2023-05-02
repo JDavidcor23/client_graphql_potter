@@ -1,0 +1,33 @@
+# This is a sample Bitbucket Pipelines configuration for a ReactJS project.
+
+image: node:16.3.0-alpine3.11
+
+pipelines:
+  default:
+    - step:
+        name: Install Dependencies
+        caches:
+          - node
+        script:
+          - npm install
+
+    - step:
+        name: Run Tests
+        caches:
+          - node
+        script:
+          - npm test
+
+    - step:
+        name: Build Production Code
+        caches:
+          - node
+        script:
+          - npm run build
+
+    - step:
+        name: Deploy to Production
+        deployment: production
+        trigger: manual
+        script:
+          - echo "Deploying to production..."
