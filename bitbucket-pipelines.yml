@@ -1,41 +1,20 @@
-# This is a sample Bitbucket Pipelines configuration for a ReactJS project.
-
-image: node:16.3.0-alpine3.11
+image: node:14.16.0
 
 pipelines:
   default:
     - step:
-        name: Install Dependencies
+        name: Install and Build
         caches:
           - node
         script:
           - npm install
-
-    - step:
-        name: Run Tests
-        caches:
-          - node
-        script:
-          - npm test
-
-    - step:
-        name: Build Production Code
-        caches:
-          - node
-        script:
           - npm run build
-
     - step:
-        - name: atlassian/aws-s3-deploy
-          image: atlassian/pipelines-awscli
-          deployment: production
-          trigger: manual
-          script:
-            - pipe: atlassian/aws-s3-deploy:1.2.1
-              variables:
-                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
-                S3_BUCKET: "harry-potter-graphql-jdavidcor"
-                LOCAL_PATH: "dist/*"
-                ACL: "public-read"
+        name: Deploy to AWS
+        deployment: production
+        trigger: manual
+        script:
+          - apt-get update && apt-get install -y zip
+          - zip -r app.zip build/
+          - apt-get install -y awscli
+          - aws s3 cp app.zip s3://harry-potter-graphql-jdavidcor/app.zip
