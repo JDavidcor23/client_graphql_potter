@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAddCharacter } from "../hooks/useAddCharacter";
+import { useAddCharacter } from "../hooks/useAddCharacter.js";
 
 export const AddCharacterForm = () => {
   const { onSubmit, onChange, loading } = useAddCharacter();

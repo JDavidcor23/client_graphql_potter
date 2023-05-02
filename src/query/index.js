@@ -1,2 +1,2 @@
-export * from "./getCharacters";
-export * from "./addCharacter";
+export * from "./getCharacters.js";
+export * from "./addCharacter.js";

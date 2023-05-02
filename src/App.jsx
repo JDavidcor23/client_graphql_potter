@@ -1,11 +1,8 @@
-import { useEffect, useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
 import { useQuery } from "@apollo/client";
 import { getCharacters } from "./query";
-import { Card } from "./components/card";
-import { AddCharacterForm } from "./components/AddCharacterForm";
+import { Card } from "./components/card.jsx";
+import { AddCharacterForm } from "./components/AddCharacterForm.js";
+import "./App.css";
 
 function App() {
   const { data, loading, error } = useQuery(getCharacters);

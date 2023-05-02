@@ -1,6 +1,6 @@
 import React from "react";
-import { useDeleteCharacter } from "../hooks/useDeleteCharacter";
-import { useChangeCharacterStatus } from "../hooks/useChangeCharacterStatus";
+import { useDeleteCharacter } from "../hooks/useDeleteCharacter.js";
+import { useChangeCharacterStatus } from "../hooks/useChangeCharacterStatus.js";
 
 export const Card = ({ character }) => {
   const { onClick } = useDeleteCharacter();

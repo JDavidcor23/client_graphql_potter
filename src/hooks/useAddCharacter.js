@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { addCharacter, getCharacters } from "../query";
+import { addCharacter, getCharacters } from "../query/index.js";
 import { useMutation } from "@apollo/client";
 
 export const useAddCharacter = () => {
