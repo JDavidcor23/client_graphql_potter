@@ -1,7 +1,6 @@
 # This is a sample Bitbucket Pipelines configuration for a ReactJS project.
 
-image: public.ecr.aws/sam/build-nodejs14.x
-image: atlassian/default-image:2
+image: node:16.3.0-alpine3.11
 
 pipelines:
   default:
@@ -11,21 +10,24 @@ pipelines:
           - node
         script:
           - npm install
+
+    - step:
+        name: Run Tests
+        caches:
+          - node
+        script:
+          - npm test
+
     - step:
         name: Build Production Code
         caches:
           - node
         script:
           - npm run build
+
     - step:
-        name: Deploy to S3
+        name: Deploy to Production
         deployment: production
+        trigger: manual
         script:
-          - pipe: atlassian/aws-s3-deploy:0.3.8
-            variables:
-              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
-              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
-              AWS_DEFAULT_REGION: 'us-east-1'
-              S3_BUCKET: 'bbci-example-s3-deploy'
-              LOCAL_PATH: 'artifact'
-              ACL: 'public-read'
+          - npm run deploy
