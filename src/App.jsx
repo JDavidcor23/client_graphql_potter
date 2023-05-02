@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { getCharacters } from "./query";
 import { Card } from "./components/card.jsx";
-import { AddCharacterForm } from "./components/AddCharacterForm.js";
+import { AddCharacterForm } from "./components/AddCharacterForm.jsx";
 import "./App.css";
 
 function App() {
