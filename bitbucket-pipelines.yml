@@ -2,6 +2,11 @@
 
 image: node:16.3.0-alpine3.11
 
+environment:
+  AWS_ACCESS_KEY_ID: ${}
+  AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+  AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION}
+
 pipelines:
   default:
     - step:
@@ -29,8 +34,14 @@ pipelines:
           - build/**
 
     - step:
-        name: Deploy to Production
+        name: Desplegar en AWS
         deployment: production
-        trigger: manual
         script:
-          - npm run deploy
+          - pipe: atlassian/aws-s3-deploy:1.2.1
+            variables:
+              AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+              AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+              AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+              S3_BUCKET: "harry-potter-graphql-jdavidcor"
+              LOCAL_PATH: "dist/*"
+              ACL: "public-read"
