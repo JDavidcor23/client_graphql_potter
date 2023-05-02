@@ -30,4 +30,4 @@ pipelines:
         deployment: production
         trigger: manual
         script:
-          - echo "Deploying to production..."
+          - npm run deploy
