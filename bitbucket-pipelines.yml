@@ -26,8 +26,16 @@ pipelines:
           - npm run build
 
     - step:
-        name: Deploy to Production
-        deployment: production
-        trigger: manual
-        script:
-          - npm run deploy
+        - name: atlassian/aws-s3-deploy
+          image: atlassian/pipelines-awscli
+          deployment: production
+          trigger: manual
+          script:
+            - pipe: atlassian/aws-s3-deploy:1.2.1
+              variables:
+                AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+                AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
+                AWS_DEFAULT_REGION: $AWS_DEFAULT_REGION
+                S3_BUCKET: "harry-potter-graphql-jdavidcor"
+                LOCAL_PATH: "dist/*"
+                ACL: "public-read"
